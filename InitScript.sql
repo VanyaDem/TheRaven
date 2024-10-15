@@ -1,4 +1,4 @@
-CREATE USER 'theraven'@'localhost' IDENTIFIED BY 'theraven';
+CREATE USER 'theraven'@'%' IDENTIFIED BY 'theraven';
 CREATE DATABASE theraven_db;
-GRANT ALL PRIVILEGES ON theraven_db.* TO 'theraven'@'localhost';
+GRANT ALL PRIVILEGES ON *.* TO 'theraven'@'%';
 FLUSH PRIVILEGES ;
