@@ -4,9 +4,11 @@ import com.testtask.theraven.domain.dto.CustomerDTO;
 import com.testtask.theraven.domain.dto.CustomerRequestDTO;
 import com.testtask.theraven.service.CustomerService;
 import com.testtask.theraven.util.DtoUtils;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,6 +20,7 @@ import java.util.List;
  */
 @RestController
 @RequiredArgsConstructor
+@Validated
 @CrossOrigin("*")
 @RequestMapping("/api/customers")
 public class CustomerController {
@@ -31,7 +34,7 @@ public class CustomerController {
      * @return ResponseEntity with the information of the created customer
      */
     @PostMapping
-    public ResponseEntity<CustomerDTO> addCustomer(@RequestBody CustomerRequestDTO customerRequestDTO) {
+    public ResponseEntity<CustomerDTO> addCustomer(@RequestBody @Valid CustomerRequestDTO customerRequestDTO) {
         var customer = DtoUtils.toCustomer(customerRequestDTO);
         customer = service.add(customer);
         return ResponseEntity.status(HttpStatus.CREATED).body(DtoUtils.toDto(customer));
@@ -63,12 +66,12 @@ public class CustomerController {
     /**
      * Updates the information of an existing customer.
      *
-     * @param id            the identifier of the customer to update
-     * @param customerDTO   the object with the new customer data
+     * @param id          the identifier of the customer to update
+     * @param customerDTO the object with the new customer data
      * @return ResponseEntity with the updated customer's information
      */
     @PutMapping("/{id}")
-    public ResponseEntity<CustomerDTO> updateCustomer(@PathVariable Long id, @RequestBody CustomerRequestDTO customerDTO) {
+    public ResponseEntity<CustomerDTO> updateCustomer(@PathVariable Long id, @RequestBody @Valid CustomerRequestDTO customerDTO) {
         var customer = service.update(id, DtoUtils.toCustomer(customerDTO));
         return ResponseEntity.ok(DtoUtils.toDto(customer));
     }
