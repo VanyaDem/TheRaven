@@ -7,6 +7,14 @@ import jakarta.persistence.Table;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * Represents a customer entity for the "customer" table in the database.
+ * This class maps to the corresponding columns and provides essential information
+ * such as the customer's full name, email, phone number, and status (active or not).
+ *
+ * @author Ivan Demydenko
+ */
+
 @Data
 @NoArgsConstructor
 @Entity
