@@ -22,19 +22,4 @@ public class CustomerDTO {
 
     private String phone;
 
-    /**
-     * Converts a {@link Customer} entity to a {@link CustomerDTO}.
-     *
-     * @param customer The {@link Customer} entity to be converted.
-     * @return A new instance of {@link CustomerDTO} with the data copied from the given entity.
-     */
-    public static CustomerDTO of(Customer customer) { // by information expert pattern
-        var dto = new CustomerDTO();
-        dto.setId(customer.getId());
-        dto.setFullName(customer.getFullName());
-        dto.setEmail(customer.getEmail());
-        dto.setPhone(customer.getPhone());
-        return dto;
-    }
-
 }
