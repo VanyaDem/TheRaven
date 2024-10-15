@@ -2,7 +2,7 @@ package com.testtask.theraven.service;
 
 import com.testtask.theraven.domain.entity.Customer;
 import com.testtask.theraven.exception.EmailEditException;
-import com.testtask.theraven.persistence.repository.CustomerRepository;
+import com.testtask.theraven.repository.CustomerRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
