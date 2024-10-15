@@ -1,4 +1,4 @@
-package com.testtask.theraven.presentation.controllers;
+package com.testtask.theraven.presentation.controller;
 
 import com.testtask.theraven.domain.dto.CustomerDTO;
 import com.testtask.theraven.domain.dto.CustomerRequestDTO;
