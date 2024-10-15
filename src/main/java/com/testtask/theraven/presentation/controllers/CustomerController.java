@@ -20,39 +20,36 @@ public class CustomerController {
 
     private final CustomerService service;
 
-    //todo: add understandable http statuses for each endpoint
-
     @PostMapping
-    public ResponseEntity<CustomerDTO> addCustomer(@RequestBody CustomerRequestDTO customerRequestDTO){
+    public ResponseEntity<CustomerDTO> addCustomer(@RequestBody CustomerRequestDTO customerRequestDTO) {
         var customer = DtoUtils.toCustomer(customerRequestDTO);
         customer = service.add(customer);
-        return ResponseEntity.ok(DtoUtils.toDto(customer));
+        return ResponseEntity.status(HttpStatus.CREATED).body(DtoUtils.toDto(customer));
     }
 
     @GetMapping
-    public ResponseEntity<List<CustomerDTO>> getAll(){
+    public ResponseEntity<List<CustomerDTO>> getAll() {
         var customers = service.getAll();
         return ResponseEntity.ok(DtoUtils.toList(customers));
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<CustomerDTO> getById(@PathVariable Long id){
+    public ResponseEntity<CustomerDTO> getById(@PathVariable Long id) {
         var customer = service.getById(id);
         return ResponseEntity.ok(DtoUtils.toDto(customer));
     }
 
 
-
     @PutMapping("/{id}")
-    public ResponseEntity<CustomerDTO> updateCustomer(@PathVariable Long id, @RequestBody CustomerDTO customerDTO){
-        var customer = service.update(id , DtoUtils.toCustomer(customerDTO));
+    public ResponseEntity<CustomerDTO> updateCustomer(@PathVariable Long id, @RequestBody CustomerRequestDTO customerDTO) {
+        var customer = service.update(id, DtoUtils.toCustomer(customerDTO));
         return ResponseEntity.ok(DtoUtils.toDto(customer));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteCustomer(@PathVariable Long id){
+    public ResponseEntity<Void> deleteCustomer(@PathVariable Long id) {
         service.delete(id);
-        return ResponseEntity.ok("Customer was deleted.");
+        return ResponseEntity.noContent().build();
     }
 
 
