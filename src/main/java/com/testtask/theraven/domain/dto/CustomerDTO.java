@@ -1,6 +1,5 @@
 package com.testtask.theraven.domain.dto;
 
-
 import com.testtask.theraven.domain.entity.Customer;
 import lombok.Data;
 
