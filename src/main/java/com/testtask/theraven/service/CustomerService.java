@@ -1,9 +1,7 @@
 package com.testtask.theraven.service;
 
-import com.testtask.theraven.domain.dto.CustomerDTO;
 import com.testtask.theraven.domain.entity.Customer;
 import com.testtask.theraven.persistence.repository.CustomerRepository;
-import com.testtask.theraven.util.DtoUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -30,25 +28,33 @@ public class CustomerService {
         return repository.save(customer);
     }
 
-    public Customer update(Long id, CustomerDTO dto) {
-        var oldCustomer = repository.findById(id)
-                .orElseThrow();
+    public Customer update(Long id, Customer updatedCustomer) {
 
-        var updatedCustomer = DtoUtils.toCustomer(dto);
+        var oldCustomer = repository.findById(id).orElseThrow();
 
-        if(!oldCustomer.getEmail().equals(updatedCustomer.getEmail())){
-            throw new RuntimeException("Email can not be edited!"); //todo: create specific exception
-        }
+        constraintsCheck(id, oldCustomer, updatedCustomer);
 
-        updatedCustomer.setCreated(oldCustomer.getCreated());
-        updatedCustomer.setUpdated(System.currentTimeMillis());
+        oldCustomer.setUpdated(System.currentTimeMillis());
+        oldCustomer.setFullName(updatedCustomer.getFullName());
+        oldCustomer.setPhone(updatedCustomer.getPhone());
 
-        repository.delete(oldCustomer);
-        return repository.save(updatedCustomer);
+        return repository.save(oldCustomer);
     }
+
+
 
     public void delete(Long id) {
         var customer = repository.findById(id).orElseThrow();
         customer.setIsActive(false);
+        repository.flush();
+    }
+
+    private void constraintsCheck(Long id, Customer old, Customer upd){
+        if(!old.getEmail().equals(upd.getEmail())){
+            throw new RuntimeException("Email can not be edited!"); //todo: create specific exception
+        }
+        if (!id.equals(upd.getId())){
+            throw  new RuntimeException("Id can not be edited!"); //todo: create specific exception
+        }
     }
 }
