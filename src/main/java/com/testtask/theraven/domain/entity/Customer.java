@@ -32,7 +32,7 @@ public class Customer {
     @Column(name = "full_name", nullable = false, length = 50)
     private String fullName;
 
-    @Column(nullable = false, length = 100, unique = true)
+    @Column(nullable = false, length = 100, unique = true,updatable = false)
     private String email;
 
     @Column(length = 14)
