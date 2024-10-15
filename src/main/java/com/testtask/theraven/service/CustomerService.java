@@ -1,11 +1,14 @@
 package com.testtask.theraven.service;
 
 import com.testtask.theraven.domain.entity.Customer;
+import com.testtask.theraven.exception.EmailEditException;
 import com.testtask.theraven.persistence.repository.CustomerRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.function.Supplier;
 
 /**
  * Service class for managing customer-related operations.
@@ -43,7 +46,7 @@ public class CustomerService {
         return repository
                 .findById(id)
                 .filter(Customer::getIsActive)
-                .orElseThrow();
+                .orElseThrow(createNotFoundException(id));
     }
 
     /**
@@ -68,7 +71,7 @@ public class CustomerService {
     public Customer update(Long id, Customer updatedCustomer) {
         var oldCustomer = repository
                 .findById(id)
-                .orElseThrow();
+                .orElseThrow(createNotFoundException(id));
 
         emailCheck(oldCustomer.getEmail(), updatedCustomer.getEmail());
 
@@ -88,7 +91,7 @@ public class CustomerService {
     public void delete(Long id) {
         var customer = repository
                 .findById(id)
-                .orElseThrow();
+                .orElseThrow(createNotFoundException(id));
 
         customer.setIsActive(false);
         repository.save(customer);
@@ -99,11 +102,26 @@ public class CustomerService {
      *
      * @param email    the current email of the customer
      * @param dtoEmail the new email to compare with
-     * @throws RuntimeException if the email is being modified
+     * @throws EmailEditException if the email is being modified
      */
     private void emailCheck(String email, String dtoEmail) {
         if (!email.equals(dtoEmail)) {
-            throw new RuntimeException("Email cannot be edited!"); // TODO: create a specific exception
+            throw new EmailEditException("Email cannot be edited!");
         }
     }
+
+    /**
+     * Creates a {@link NoSuchElementException} supplier with a detailed message indicating that
+     * a customer with the specified ID does not exist.
+     *
+     * This method is used to lazily throw a {@link NoSuchElementException} when a customer is not found
+     * in the repository.
+     *
+     * @param id the identifier of the customer that was not found
+     * @return a {@link Supplier} that provides a {@link NoSuchElementException} with a message
+     */
+    private Supplier<NoSuchElementException> createNotFoundException(Long id){
+        return () -> new NoSuchElementException(String.format("Customer with id: %s no exist!", id));
+    }
 }
+
