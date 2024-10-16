@@ -29,7 +29,8 @@ public class CustomerServiceImpl implements CustomerService {
      * @return a list of active customers
      */
     public List<Customer> getAll() {
-        return repository.findAll()
+        return repository
+                .findAll()
                 .stream()
                 .filter(Customer::getIsActive)
                 .toList();

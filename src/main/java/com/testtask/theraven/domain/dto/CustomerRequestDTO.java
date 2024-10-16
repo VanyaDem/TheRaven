@@ -6,7 +6,6 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 
 /**
  * Data Transfer Object (DTO) for customer creation or update requests.
@@ -16,7 +15,7 @@ import lombok.EqualsAndHashCode;
  * @author Ivan Demydenko
  */
 @Data
-public class CustomerRequestDTO extends AbstractCustomerDTO{
+public class CustomerRequestDTO extends AbstractCustomerDTO {
 
     @JsonIgnore
     private Long id;
