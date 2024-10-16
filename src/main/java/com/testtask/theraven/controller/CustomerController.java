@@ -71,7 +71,7 @@ public class CustomerController {
      * @return ResponseEntity with the updated customer's information
      */
     @PutMapping("/{id}")
-    public ResponseEntity<CustomerDTO> updateCustomer(@PathVariable Long id, @RequestBody @Valid CustomerRequestDTO customerDTO) {
+    public ResponseEntity<CustomerDTO> updateCustomer(@PathVariable Long id, @RequestBody @Valid CustomerDTO customerDTO) {
         var customer = service.update(id, DtoUtils.toCustomer(customerDTO));
         return ResponseEntity.ok(DtoUtils.toDto(customer));
     }
