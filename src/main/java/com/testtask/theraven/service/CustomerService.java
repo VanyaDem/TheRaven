@@ -87,7 +87,8 @@ public class CustomerService {
      * @throws NoSuchElementException if the customer with the specified ID does not exist
      */
     private Customer findExistingCustomer(Long id) {
-        return repository.findById(id)
+        return repository
+                .findById(id)
                 .orElseThrow(createNotFoundException(id));
     }
 
