@@ -15,9 +15,8 @@ import lombok.EqualsAndHashCode;
  *
  * @author Ivan Demydenko
  */
-@EqualsAndHashCode(callSuper = true)
 @Data
-public class CustomerRequestDTO extends CustomerDTO{
+public class CustomerRequestDTO extends AbstractCustomerDTO{
 
     @JsonIgnore
     private Long id;
