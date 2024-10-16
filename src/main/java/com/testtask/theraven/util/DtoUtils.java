@@ -35,12 +35,13 @@ public class DtoUtils {
      * @return a CustomerDTO representation of the given customer
      */
     public static CustomerDTO toDto(Customer customer) {
-        var dto = new CustomerDTO();
-        dto.setId(customer.getId());
-        dto.setFullName(customer.getFullName());
-        dto.setEmail(customer.getEmail());
-        dto.setPhone(customer.getPhone());
-        return dto;
+        return CustomerDTO
+                .builder()
+                .id(customer.getId())
+                .fullName(customer.getFullName())
+                .email(customer.getEmail())
+                .phone(customer.getPhone())
+                .build();
     }
 
     /**
@@ -52,17 +53,16 @@ public class DtoUtils {
      * @return a Customer entity representation of the given DTO
      */
     public static Customer toCustomer(AbstractCustomerDTO dto) {
-        var customer = new Customer();
         Long currentTime = System.currentTimeMillis();
-
-        customer.setId(dto.getId());
-        customer.setCreated(currentTime);
-        customer.setUpdated(currentTime);
-        customer.setFullName(dto.getFullName());
-        customer.setEmail(dto.getEmail());
-        customer.setPhone(dto.getPhone());
-        customer.setIsActive(true);
-
-        return customer;
+        return Customer
+                .builder()
+                .id(dto.getId())
+                .created(currentTime)
+                .updated(currentTime)
+                .fullName(dto.getFullName())
+                .email(dto.getEmail())
+                .phone(dto.getPhone())
+                .isActive(true)
+                .build();
     }
 }
