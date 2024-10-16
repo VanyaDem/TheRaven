@@ -1,8 +1,6 @@
-USE theraven_db;
-
 CREATE TABLE customer
 (
-    id        BIGINT AUTO_INCREMENT,
+    id        BIGSERIAL,
     created   BIGINT       NOT NULL,
     updated   BIGINT       NOT NULL,
     full_name VARCHAR(50)  NOT NULL,
