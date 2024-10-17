@@ -113,7 +113,7 @@ public class CustomerServiceImpl implements CustomerService {
      * @param newId the new ID to set for the customer
      */
     private void updateCustomerIdIfNeeded(Long oldId, Long newId) {
-        if (!oldId.equals(newId)) {
+        if (!oldId.equals(newId) && newId != null) {
             repository.updateId(oldId, newId);
         }
     }
