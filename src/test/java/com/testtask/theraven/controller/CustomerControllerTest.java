@@ -24,6 +24,8 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import java.util.Arrays;
 import java.util.List;
 
+import static com.testtask.theraven.util.TestUtils.*;
+
 @AutoConfigureMockMvc
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -48,7 +50,7 @@ class CustomerControllerTest {
 
         mockMvc.perform(MockMvcRequestBuilders.post("/api/customers")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectToJson(dto)))
+                        .content(objectToJson(objectMapper, dto)))
                 .andExpect(MockMvcResultMatchers.status().isCreated());
     }
 
@@ -59,7 +61,7 @@ class CustomerControllerTest {
 
         mockMvc.perform(MockMvcRequestBuilders.post("/api/customers")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectToJson(dto)))
+                        .content(objectToJson(objectMapper, dto)))
                 .andExpect(MockMvcResultMatchers.status().isCreated());
 
         var customer = entityManager.find(Customer.class, 1L);
@@ -79,7 +81,6 @@ class CustomerControllerTest {
     @Test
     @Transactional
     void getAll_return_all_customers() {
-
         createListOfCustomers().stream().peek(c -> c.setId(null)).forEach(entityManager::persist);
 
         var res = mockMvc.perform(MockMvcRequestBuilders.get("/api/customers")
@@ -110,7 +111,6 @@ class CustomerControllerTest {
     @Test
     @Transactional
     void getById_return_customer() {
-
         createListOfCustomers().stream().peek(c -> c.setId(null)).forEach(entityManager::persist);
 
         var res = mockMvc.perform(MockMvcRequestBuilders.get("/api/customers/1")
@@ -131,7 +131,6 @@ class CustomerControllerTest {
     @Test
     @Transactional
     void getById_hide_no_active_customers() {
-
         createListOfCustomers().stream().peek(c -> c.setId(null)).forEach(entityManager::persist);
 
         mockMvc.perform(MockMvcRequestBuilders.get("/api/customers/2")
@@ -144,7 +143,6 @@ class CustomerControllerTest {
     @Transactional
     void updateCustomer_update_customer_id() {
         createListOfCustomers().stream().peek(c -> c.setId(null)).forEach(entityManager::persist);
-
         CustomerDTO dto = CustomerDTO.builder()
                 .id(15L)
                 .fullName("Ivan Demydenko")
@@ -154,7 +152,7 @@ class CustomerControllerTest {
 
         mockMvc.perform(MockMvcRequestBuilders.put("/api/customers/1")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectToJson(dto)))
+                        .content(objectToJson(objectMapper, dto)))
                 .andExpect(MockMvcResultMatchers.status().isOk());
 
         var customer = entityManager.find(Customer.class, 15L);
@@ -178,7 +176,7 @@ class CustomerControllerTest {
 
         mockMvc.perform(MockMvcRequestBuilders.put("/api/customers/1")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectToJson(dto)))
+                        .content(objectToJson(objectMapper, dto)))
                 .andExpect(MockMvcResultMatchers.status().isOk());
 
         var customer = entityManager.find(Customer.class, 1L);
@@ -194,7 +192,6 @@ class CustomerControllerTest {
     @Test
     @Transactional
     void delete_should_return_204_status() {
-
         createListOfCustomers().stream().peek(c -> c.setId(null)).forEach(entityManager::persist);
 
         mockMvc.perform(MockMvcRequestBuilders.delete("/api/customers/1")
@@ -206,7 +203,6 @@ class CustomerControllerTest {
     @Test
     @Transactional
     void delete_should_set_isActive_false() {
-
         createListOfCustomers().stream().peek(c -> c.setId(null)).forEach(entityManager::persist);
 
         mockMvc.perform(MockMvcRequestBuilders.delete("/api/customers/1")
@@ -217,60 +213,5 @@ class CustomerControllerTest {
 
         Assertions.assertFalse(noActiveCustomer.getIsActive());
         Assertions.assertEquals(1, noActiveCustomer.getId());
-    }
-
-
-    private static CustomerRequestDTO createCustomerDto() {
-        return CustomerRequestDTO.builder()
-                .id(1L)
-                .fullName("Ivan Demydenko")
-                .email("vanyaDem@gmail.com")
-                .phone("+380556667788")
-                .build();
-    }
-
-    private List<Customer> createListOfCustomers() {
-
-        Long currentTime = System.currentTimeMillis();
-
-        Customer customer1 = Customer.builder()
-                .id(1L)
-                .created(currentTime)
-                .updated(currentTime)
-                .fullName("Ivan Demydenko")
-                .email("vanyaDem@gmail.com")
-                .phone("+380556667788")
-                .isActive(true)
-                .build();
-
-        Customer customer2 = Customer.builder()
-                .id(2L)
-                .created(currentTime)
-                .updated(currentTime)
-                .fullName("Stepan Giga")
-                .email("zolotoCarpat@gmail.com")
-                .phone("+380556667788")
-                .isActive(false)
-                .build();
-
-        Customer customer3 = Customer.builder()
-                .id(3L)
-                .created(currentTime)
-                .updated(currentTime)
-                .fullName("Petro Rat")
-                .email("skilkiSebePamiataYou@gmail.com")
-                .phone(null)
-                .isActive(true)
-                .build();
-
-        return List.of(customer1, customer2, customer3);
-    }
-
-    private String objectToJson(Object obj) {
-        try {
-            return objectMapper.writeValueAsString(obj);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
     }
 }
