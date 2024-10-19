@@ -26,7 +26,7 @@ public class CustomerDTO extends AbstractCustomerDTO {
     @Size(min = 2, max = 50, message = "Full name must be between 2 and 50 characters")
     private String fullName;
 
-    @Email(message = "Email should be valid")
+    @Pattern(regexp = "^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$", message = "Email should be valid") // I didn't use the @Email annotation because it limits email to 75 characters (the test task requirements say 100)
     @Size(min = 2, max = 100, message = "Email must be between 2 and 100 characters long")
     private String email;
 
