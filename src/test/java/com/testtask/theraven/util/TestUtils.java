@@ -64,9 +64,10 @@ public class TestUtils {
         }
     }
 
-    public static String generateTheLongerEmail(){
-        var bodyOfEmail = Stream.generate(() -> "a").limit(100).collect(Collectors.joining());
-        return bodyOfEmail + "@gmail.com";
+    public static String generateStringWithLength(int length){
+        return Stream
+                .generate(() -> "a")
+                .limit(length)
+                .collect(Collectors.joining());
     }
-
 }
