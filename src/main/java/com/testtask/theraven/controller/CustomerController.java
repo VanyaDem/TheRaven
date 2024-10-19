@@ -1,7 +1,6 @@
 package com.testtask.theraven.controller;
 
 import com.testtask.theraven.domain.dto.CustomerDTO;
-import com.testtask.theraven.domain.dto.CustomerRequestDTO;
 import com.testtask.theraven.service.CustomerService;
 import com.testtask.theraven.util.DtoUtils;
 import jakarta.validation.Valid;
@@ -30,12 +29,12 @@ public class CustomerController {
     /**
      * Adds a new customer.
      *
-     * @param customerRequestDTO the object containing the new customer's data
+     * @param customerDTO the object containing the new customer's data
      * @return ResponseEntity with the information of the created customer
      */
     @PostMapping
-    public ResponseEntity<CustomerDTO> addCustomer(@RequestBody @Valid CustomerRequestDTO customerRequestDTO) {
-        var customer = DtoUtils.toCustomer(customerRequestDTO);
+    public ResponseEntity<CustomerDTO> addCustomer(@RequestBody @Valid CustomerDTO customerDTO) {
+        var customer = DtoUtils.toCustomer(customerDTO);
         customer = service.add(customer);
         return ResponseEntity.status(HttpStatus.CREATED).body(DtoUtils.toDto(customer));
     }

@@ -1,6 +1,5 @@
 package com.testtask.theraven.util;
 
-import com.testtask.theraven.domain.dto.AbstractCustomerDTO;
 import com.testtask.theraven.domain.dto.CustomerDTO;
 import com.testtask.theraven.domain.entity.Customer;
 
@@ -52,7 +51,7 @@ public class DtoUtils {
      * @param dto the CustomerDTO to convert
      * @return a Customer entity representation of the given DTO
      */
-    public static Customer toCustomer(AbstractCustomerDTO dto) {
+    public static Customer toCustomer(CustomerDTO dto) {
         Long currentTime = System.currentTimeMillis();
         return Customer
                 .builder()

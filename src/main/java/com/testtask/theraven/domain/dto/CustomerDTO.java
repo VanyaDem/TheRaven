@@ -14,10 +14,10 @@ import lombok.Data;
  *
  * @author Ivan Demydenko
  */
+
 @Data
 @Builder
-public class CustomerDTO extends AbstractCustomerDTO {
-
+public class CustomerDTO {
 
     private Long id;
 
@@ -25,9 +25,8 @@ public class CustomerDTO extends AbstractCustomerDTO {
     @Size(min = 2, max = 50, message = "Full name must be between 2 and 50 characters")
     private String fullName;
 
-    @NotBlank(message = "Email is mandatory and cannot be blank") //TODO: create new annotation @EmailValidation
+    @NotBlank(message = "Email is mandatory and cannot be blank")
     @Pattern(regexp = "^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$", message = "Email should be valid")
-    // I didn't use the @Email annotation because it limits email to 75 characters (the test task requirements say 100)
     @Size(min = 2, max = 100, message = "Email must be between 2 and 100 characters long")
     private String email;
 

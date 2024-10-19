@@ -2,7 +2,6 @@ package com.testtask.theraven.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.testtask.theraven.domain.dto.CustomerDTO;
-import com.testtask.theraven.domain.dto.CustomerRequestDTO;
 import com.testtask.theraven.domain.entity.Customer;
 import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;
@@ -46,7 +45,7 @@ class CustomerControllerTest {
     @SneakyThrows
     @Test
     void addCustomer_should_return_201_status() {
-        CustomerRequestDTO dto = createCustomerDto();
+        var dto = createCustomerDto();
 
         mockMvc.perform(MockMvcRequestBuilders.post("/api/customers")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -57,7 +56,7 @@ class CustomerControllerTest {
     @SneakyThrows
     @Test
     void addCustomer_add_new_customer_to_DB() {
-        CustomerRequestDTO dto = createCustomerDto();
+        var dto = createCustomerDto();
 
         mockMvc.perform(MockMvcRequestBuilders.post("/api/customers")
                         .contentType(MediaType.APPLICATION_JSON)

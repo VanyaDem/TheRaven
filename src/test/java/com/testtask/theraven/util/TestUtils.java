@@ -1,7 +1,7 @@
 package com.testtask.theraven.util;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.testtask.theraven.domain.dto.CustomerRequestDTO;
+import com.testtask.theraven.domain.dto.CustomerDTO;
 import com.testtask.theraven.domain.entity.Customer;
 
 import java.util.List;
@@ -10,8 +10,8 @@ import java.util.stream.Stream;
 
 public class TestUtils {
 
-    public static CustomerRequestDTO createCustomerDto() {
-        return CustomerRequestDTO.builder()
+    public static CustomerDTO createCustomerDto() {
+        return CustomerDTO.builder()
                 .id(1L)
                 .fullName("Ivan Demydenko")
                 .email("vanyaDem@gmail.com")
@@ -64,7 +64,7 @@ public class TestUtils {
         }
     }
 
-    public static String generateStringWithLength(int length){
+    public static String generateStringWithLength(int length) {
         return Stream
                 .generate(() -> "a")
                 .limit(length)

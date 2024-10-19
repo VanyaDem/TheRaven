@@ -1,7 +1,7 @@
 package com.testtask.theraven.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.testtask.theraven.domain.dto.CustomerRequestDTO;
+import com.testtask.theraven.domain.dto.CustomerDTO;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
@@ -98,7 +98,7 @@ public class CustomerControllerValidationTest {
         doRequest(requestBuilderSupplier, dto);
     }
 
-    private void doRequest(Supplier<MockHttpServletRequestBuilder> requestBuilderSupplier, CustomerRequestDTO dto) throws Exception {
+    private void doRequest(Supplier<MockHttpServletRequestBuilder> requestBuilderSupplier, CustomerDTO dto) throws Exception {
         mockMvc.perform(requestBuilderSupplier.get()
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectToJson(objectMapper, dto)))
