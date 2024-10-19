@@ -74,7 +74,7 @@ public class CustomerServiceImpl implements CustomerService {
     public Customer update(Long id, Customer updatedCustomer) {
         Customer oldCustomer = findExistingCustomer(id);
 
-        emailCheck(oldCustomer.getEmail(), updatedCustomer.getEmail());
+        checkEmailChange(oldCustomer.getEmail(), updatedCustomer.getEmail());
 
         updateCustomerIdIfNeeded(id, updatedCustomer.getId());
 
@@ -103,7 +103,7 @@ public class CustomerServiceImpl implements CustomerService {
      * @param dtoEmail the new email to compare with
      * @throws EmailEditException if the email is being modified
      */
-    private void emailCheck(String email, String dtoEmail) {
+    private void checkEmailChange(String email, String dtoEmail) {
         if (!email.equals(dtoEmail)) {
             throw new EmailEditException("Email cannot be edited!");
         }
