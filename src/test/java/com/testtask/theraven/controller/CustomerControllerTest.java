@@ -55,7 +55,7 @@ class CustomerControllerTest {
 
     @SneakyThrows
     @Test
-    void addCustomer_add_new_customer_to_DB() {
+    void addCustomer_adds_new_customer_to_DB() {
         var dto = createCustomerDto();
 
         mockMvc.perform(MockMvcRequestBuilders.post("/api/customers")
@@ -79,7 +79,7 @@ class CustomerControllerTest {
     @SneakyThrows
     @Test
     @Transactional
-    void getAll_return_all_customers() {
+    void getAll_returns_all_customers() {
         createListOfCustomers().stream().peek(c -> c.setId(null)).forEach(entityManager::persist);
 
         var res = mockMvc.perform(MockMvcRequestBuilders.get("/api/customers")
@@ -109,7 +109,7 @@ class CustomerControllerTest {
     @SneakyThrows
     @Test
     @Transactional
-    void getById_return_customer() {
+    void getById_returns_customer() {
         createListOfCustomers().stream().peek(c -> c.setId(null)).forEach(entityManager::persist);
 
         var res = mockMvc.perform(MockMvcRequestBuilders.get("/api/customers/1")
@@ -164,7 +164,7 @@ class CustomerControllerTest {
     @SneakyThrows
     @Test
     @Transactional
-    void updateCustomer_update_customer() {
+    void updateCustomer_updates_customer() {
         createListOfCustomers().stream().peek(c -> c.setId(null)).forEach(entityManager::persist);
         CustomerDTO dto = CustomerDTO.builder()
                 .id(1L)
@@ -190,7 +190,7 @@ class CustomerControllerTest {
     @SneakyThrows
     @Test
     @Transactional
-    void delete_should_return_204_status() {
+    void delete_should_returns_204_status() {
         createListOfCustomers().stream().peek(c -> c.setId(null)).forEach(entityManager::persist);
 
         mockMvc.perform(MockMvcRequestBuilders.delete("/api/customers/1")
