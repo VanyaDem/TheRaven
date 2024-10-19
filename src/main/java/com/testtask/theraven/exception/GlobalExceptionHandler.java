@@ -39,6 +39,12 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler
+    public ResponseEntity<AppError> emailExistExceptionHandler(EmailExistException exception) {
+        var error = AppError.of(400, exception.getMessage());
+        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler
     public ResponseEntity<AppError> noSuchElementExceptionHandler(NoSuchElementException exception) {
         var error = AppError.of(400, exception.getMessage());
         return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);

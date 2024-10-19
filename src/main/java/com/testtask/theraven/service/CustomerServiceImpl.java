@@ -2,6 +2,7 @@ package com.testtask.theraven.service;
 
 import com.testtask.theraven.domain.entity.Customer;
 import com.testtask.theraven.exception.EmailEditException;
+import com.testtask.theraven.exception.EmailExistException;
 import com.testtask.theraven.repository.CustomerRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -57,8 +58,10 @@ public class CustomerServiceImpl implements CustomerService {
      * @return the added customer
      */
     public Customer add(Customer customer) {
+        repository.findByEmail(customer.getEmail())
+                .ifPresent(this::throwExistException);
         return repository.save(customer);
-    }//TODO: add email existing check
+    }
 
     /**
      * Updates the details of an existing customer identified by the given ID.
@@ -165,6 +168,11 @@ public class CustomerServiceImpl implements CustomerService {
      */
     private Supplier<NoSuchElementException> createNotFoundException(Long id) {
         return () -> new NoSuchElementException(String.format("Customer with id: %s no exist!", id));
+    }
+
+    private void throwExistException(Customer customer) {
+        throw new EmailExistException(String
+                .format("Customer with email %s already exist, please choose another one.", customer.getEmail()));
     }
 }
 
