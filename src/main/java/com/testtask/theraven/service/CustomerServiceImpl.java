@@ -58,7 +58,7 @@ public class CustomerServiceImpl implements CustomerService {
      */
     public Customer add(Customer customer) {
         return repository.save(customer);
-    }
+    }//TODO: add email existing check
 
     /**
      * Updates the details of an existing customer identified by the given ID.
